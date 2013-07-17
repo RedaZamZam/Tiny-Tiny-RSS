@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+  echo "PHP version: " . phpversion() . PHP_EOL;
+  echo "Max execution time: ".ini_get("max_execution_time")." seconds" . PHP_EOL;
+  
+  $url = "http://your_server.com/update_with_params.php";
+  $ch = curl_init($url); 
+ 
+  try 
+  {
+    if ( $ch === FALSE )
+        throw new Exception('failed to initialize');
+
+    $startTime = microtime(true);
+    $result = curl_exec($ch);
+    echo 'Execution time '. (microtime(true) - $startTime) . ' sec' . PHP_EOL;
+ 
+    if (FALSE === $result )
+      throw new Exception('Curl error ' . curl_errno($ch) . ' , ' . curl_error($ch) );
+    
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE );
+    
+    if ( $code != 200 )
+      throw new Exception( "Page returned error code $code" );
+ 
+  } 
+  catch(Exception $e) 
+  {
+    trigger_error( sprintf('ERROR #%d: %s\n', $e->getCode(), $e->getMessage()), E_USER_ERROR );
+  }
+  
+  curl_close($ch);
+ ?>

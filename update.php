@@ -41,7 +41,16 @@
 	}
 
 	$options = getopt("", $longopts);
-
+	
+	if (defined('UPDATE_IMPLICIT_PARAMS')) {
+		$impl_params = array_map("trim", explode(",", UPDATE_IMPLICIT_PARAMS));
+		
+		if( !is_array($options) )
+			$options=array();
+		 
+		$options = array_merge( $options, array_fill_keys($impl_params, ''));
+	}
+	
 	if (count($options) == 0 && !defined('STDIN')) {
 		?> <html>
 		<head>

@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+  ob_implicit_flush(true);
+  ob_start();
+  echo "PHP version: " . phpversion() . PHP_EOL;
+  echo "Max execution time: ".ini_get("max_execution_time")." seconds" . PHP_EOL;
+  
+  define( 'UPDATE_IMPLICIT_PARAMS', 'feeds' ); 
+  ob_flush();
+  require_once "update.php";
+  
+  /*
+  ob_flush();
+  echo 'Start sleep '. PHP_EOL;
+  ob_flush();
+  sleep ( 120 );
+  echo 'End sleep '. PHP_EOL;
+  */
+  ob_end_flush();
+?>
