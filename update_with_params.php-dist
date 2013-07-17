@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+  ///////////////////////////////////////////////////////////////////
+  // Command line params to update.php (coma separated) 
+  /////////////////////////////////////////////////////////////////// 
+  define( 'UPDATE_IMPLICIT_PARAMS', 'feeds' ); 
+  
+  /////////////////////////////////////////////////////////////////// 
+  // Uncomment to test maximum script execution time (sleep for N seconds)
+  /////////////////////////////////////////////////////////////////// 
+  //define( 'TEST_MAX_SCRIPT_EXEC_TIME', 120 );
+  
+  ob_implicit_flush(true);
+  ob_start();
+  echo "PHP version: " . phpversion() . PHP_EOL;
+  echo "Max execution time: ".ini_get("max_execution_time")." seconds" . PHP_EOL;
+  
+  
+  ob_flush();
+  require_once "update.php";
+  
+  if( defined('TEST_MAX_SCRIPT_EXEC_TIME') )
+  {
+    ob_flush();
+    echo 'Start sleep '. PHP_EOL;
+    ob_flush();
+    sleep ( TEST_MAX_SCRIPT_EXEC_TIME );
+    echo 'End sleep '. PHP_EOL;
+  }
+
+  ob_end_flush();
+?>
